@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "server.spring.datasource.jpa.hibernate.show-sql.false   database",
+      "type": "java.lang.String",
+      "description": "Description for server.spring.datasource.jpa.hibernate.show-sql.true   database."
+    },
+    {
+      "name": "server.spring.datasource.jpa.database-platform",
+      "type": "java.lang.String",
+      "description": "Description for server.spring.datasource.jpa.database-platform."
+    },
+    {
+      "name": "server.spring.datasource.jpa.hibernate.ddl-auto",
+      "type": "java.lang.String",
+      "description": "Description for server.spring.datasource.jpa.hibernate.ddl-auto."
+    }
+  ] }
