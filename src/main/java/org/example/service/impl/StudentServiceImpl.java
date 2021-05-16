@@ -6,12 +6,16 @@ import org.example.repository.GroupRepository;
 import org.example.repository.StudentRepository;
 import org.example.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StudentServiceImpl implements StudentService {
+
     @Autowired
     private StudentRepository studentRepo;
+
     @Autowired
     private GroupRepository groupRepo;
 
@@ -31,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
         Long id = group.getId();
         group = groupRepo.findById(id).orElseThrow(IllegalArgumentException::new);
         entity.setGroup(group);
-        group.getStudentsSet().add(entity);
+        group.getStudents().add(entity);
         groupRepo.save(group);
     }
 
@@ -46,12 +50,12 @@ public class StudentServiceImpl implements StudentService {
         Long gId = group.getId();
         Long sId = entity.getId();
         group = groupRepo.findById(gId).orElseThrow(IllegalArgumentException::new);
-        Students student = group.getStudentsSet().stream().filter(s -> sId.equals(s.getId())).findAny().orElseThrow(IllegalArgumentException::new);
+        Students student = group.getStudents().stream().filter(s -> sId.equals(s.getId())).findAny().orElseThrow(IllegalArgumentException::new);
         student.setGroup(group);
         student.setName(entity.getName());
         student.setSurname(entity.getSurname());
         student.setPhoneNumber(entity.getPhoneNumber());
-        group.getStudentsSet().add(student);
+        group.getStudents().add(student);
         studentRepo.save(student);
     }
 

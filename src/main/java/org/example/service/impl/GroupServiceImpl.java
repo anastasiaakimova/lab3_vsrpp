@@ -4,9 +4,11 @@ import org.example.entity.Groups;
 import org.example.repository.GroupRepository;
 import org.example.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GroupServiceImpl implements GroupService {
     @Autowired
     private GroupRepository groupRepo;
