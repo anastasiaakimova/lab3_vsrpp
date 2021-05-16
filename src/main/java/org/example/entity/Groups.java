@@ -1,40 +1,19 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "groups")
+@AttributeOverride(name = "id", column = @Column(name = "group_id"))
 public class Groups extends AbstractEntity{
-    private Long id;
-    private int groupId;
+    @Column(unique = true)
     private String grName;
 
-    @OneToMany(mappedBy = "groups", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private Set<Students> studentsSet;
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Students> students;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    @Column(name = "group_id", nullable = false)
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
-    @Basic
-    @Column(name = "gr_name", nullable = true, length = 45)
     public String getGrName() {
         return grName;
     }
@@ -43,31 +22,33 @@ public class Groups extends AbstractEntity{
         this.grName = grName;
     }
 
-    public Set<Students> getStudentsSet() {
-        return studentsSet;
+    public Set<Students> getStudents() {
+        return students;
     }
 
-    public void setStudentsSet(Set<Students> studentsSet) {
-        this.studentsSet = studentsSet;
+    public void setStudents(Set<Students> students) {
+        this.students = students;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
+        if (!super.equals(o)) return false;
         Groups groups = (Groups) o;
-
-        if (groupId != groups.groupId) return false;
-        if (grName != null ? !grName.equals(groups.grName) : groups.grName != null) return false;
-
-        return true;
+        return Objects.equals(grName, groups.grName) && Objects.equals(students, groups.students);
     }
 
     @Override
     public int hashCode() {
-        int result = groupId;
-        result = 31 * result + (grName != null ? grName.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), grName, students);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "grName='" + grName + '\'' +
+                ", students=" + students +
+                '}';
     }
 }

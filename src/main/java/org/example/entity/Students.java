@@ -1,29 +1,25 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "students")
-public class Students extends AbstractEntity{
-    private Long id;
+public class Students extends AbstractEntity {
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "group_id", nullable = false)
     private Groups group;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name", nullable = true, length = 45)
     public String getName() {
         return name;
     }
@@ -32,8 +28,6 @@ public class Students extends AbstractEntity{
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "surname", nullable = true, length = 45)
     public String getSurname() {
         return surname;
     }
@@ -42,8 +36,6 @@ public class Students extends AbstractEntity{
         this.surname = surname;
     }
 
-    @Basic
-    @Column(name = "phone_number", nullable = true, length = 20)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -52,38 +44,36 @@ public class Students extends AbstractEntity{
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Students students = (Students) o;
-
-        if (id != null ? !id.equals(students.id) : students.id != null) return false;
-        if (name != null ? !name.equals(students.name) : students.name != null) return false;
-        if (surname != null ? !surname.equals(students.surname) : students.surname != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(students.phoneNumber) : students.phoneNumber != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "group_id")
     public Groups getGroup() {
         return group;
     }
 
     public void setGroup(Groups group) {
         this.group = group;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Students students = (Students) o;
+        return name.equals(students.name) && surname.equals(students.surname) && phoneNumber.equals(students.phoneNumber) && group.equals(students.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, surname, phoneNumber, group);
+    }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", group=" + group +
+                '}';
     }
 }
