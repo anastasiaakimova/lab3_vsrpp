@@ -2,6 +2,7 @@ package org.example.runner;
 
 import org.example.entity.Groups;
 import org.example.entity.Students;
+import org.example.service.FacultyService;
 import org.example.service.GroupService;
 import org.example.service.StudentService;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,7 @@ public class Main {
         ConfigurableApplicationContext ctx = SpringApplication.run(Main.class);
         GroupService groupService = ctx.getBean(GroupService.class);
         StudentService studentService = ctx.getBean(StudentService.class);
+        FacultyService facultyService = ctx.getBean(FacultyService.class);
 //
 //
 //        //create

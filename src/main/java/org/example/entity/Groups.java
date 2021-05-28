@@ -11,8 +11,12 @@ public class Groups extends AbstractEntity{
     @Column(unique = true)
     private String grName;
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Students.class, mappedBy = "students", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Students> students;
+
+    @OneToMany(targetEntity = Faculty.class, mappedBy = "faculty", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Faculty> faculty;
+
 
     public String getGrName() {
         return grName;
@@ -30,25 +34,20 @@ public class Groups extends AbstractEntity{
         this.students = students;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Groups groups = (Groups) o;
-        return Objects.equals(grName, groups.grName) && Objects.equals(students, groups.students);
+    public Set<Faculty> getFaculty() {
+        return faculty;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), grName, students);
+    public void setFaculty(Set<Faculty> faculty) {
+        this.faculty = faculty;
     }
 
     @Override
     public String toString() {
-        return "Group{" +
+        return "Groups{" +
                 "grName='" + grName + '\'' +
                 ", students=" + students +
+                ", faculty=" + faculty +
                 '}';
     }
 }

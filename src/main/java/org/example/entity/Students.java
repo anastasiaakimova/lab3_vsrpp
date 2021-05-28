@@ -19,7 +19,6 @@ public class Students extends AbstractEntity {
     @JoinColumn(name = "group_id", nullable = false)
     private Groups group;
 
-
     public String getName() {
         return name;
     }
@@ -51,20 +50,6 @@ public class Students extends AbstractEntity {
 
     public void setGroup(Groups group) {
         this.group = group;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Students students = (Students) o;
-        return name.equals(students.name) && surname.equals(students.surname) && phoneNumber.equals(students.phoneNumber) && group.equals(students.group);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), name, surname, phoneNumber, group);
     }
 
     @Override
